@@ -6,7 +6,7 @@
     "scripts": {
         "build": "npx tsc && tsc-alias",
         "start": "yarn build && node dist/src/index.js",
-        "dev": "nodemon --ext 'ts, tsx, json' --watch src --exec ts-node -r tsconfig-paths/register src/index.ts",
+        "dev": "nodemon --ext ts,tsx,json --watch src --exec ts-node -r tsconfig-paths/register src/index.ts",
         "lint": "eslint src/**/*.{ts,tsx}",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
