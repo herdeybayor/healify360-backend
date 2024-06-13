@@ -1,10 +1,13 @@
 import "dotenv/config";
 import express, { Express } from "express";
+import { configurePreRouteMiddleware } from "./middleware/pre-route.middleware";
 
 const app: Express = express();
 
 const PORT = process.env.PORT || 4000;
 console.log(PORT);
+
+configurePreRouteMiddleware(app);
 
 app.get("/", (_, res) => {
     res.send({ message: "Hello World! from Healify360" }).status(200);
