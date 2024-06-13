@@ -1,8 +1,10 @@
+import "dotenv/config";
 import express, { Express } from "express";
 
 const app: Express = express();
 
-const PORT = 4000;
+const PORT = process.env.PORT || 4000;
+console.log(PORT);
 
 app.get("/", (_, res) => {
     res.send({ message: "Hello World! from Healify360" }).status(200);
