@@ -1,7 +1,7 @@
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
-import { CONFIGS } from ".././configs";
+import { CONFIGS } from "@/configs";
 import express, { Express } from "express";
 
 const configurePreRouteMiddleware = (app: Express): Express => {
