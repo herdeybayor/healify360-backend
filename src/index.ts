@@ -1,6 +1,6 @@
 import "dotenv/config";
 import express, { Express } from "express";
-import { configurePreRouteMiddleware } from "./middleware/pre-route.middleware";
+import { configurePreRouteMiddleware } from "@/middleware/pre-route.middleware";
 import { connectMongoDB } from "@/libraries/mongodb";
 
 const app: Express = express();
