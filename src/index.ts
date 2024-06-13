@@ -1,6 +1,7 @@
 import "dotenv/config";
 import express, { Express } from "express";
 import { configurePreRouteMiddleware } from "./middleware/pre-route.middleware";
+import { connectMongoDB } from "@/libraries/mongodb";
 
 const app: Express = express();
 
@@ -15,6 +16,8 @@ app.get("/", (_, res) => {
 
 // Listen to server port
 app.listen(PORT, async () => {
+    await connectMongoDB();
+
     console.log(`:::> Server listening on port ${PORT} @ http://localhost:${PORT} <:::`);
 });
 
