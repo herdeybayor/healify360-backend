@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 interface IUser extends mongoose.Document {
     name: string;
     email: string;
+    username: string;
     password?: string;
     role: "patient" | "doctor" | "admin";
     created_at: Date;
@@ -14,6 +15,11 @@ const userSchema = new mongoose.Schema<IUser>(
         name: {
             type: String,
             required: true,
+        },
+        username: {
+            type: String,
+            required: true,
+            unique: true,
         },
         email: {
             type: String,

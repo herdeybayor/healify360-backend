@@ -13,6 +13,7 @@ class AuthService {
             body: Joi.object({
                 name: Joi.string().required(),
                 password: Joi.string().required(),
+                username: Joi.string().required(),
                 email: Joi.string().email().required(),
                 role: Joi.string().valid("patient", "doctor", "admin").default("patient"),
             }),
@@ -21,8 +22,11 @@ class AuthService {
             .validate({ body });
         if (error) throw new CustomError(error.message, 400);
 
-        const existingUser = await UserModel.findOne({ email: data.body.email });
-        if (existingUser) throw new CustomError("user already exists", 409);
+        const existingUserEmail = await UserModel.findOne({ email: data.body.email });
+        if (existingUserEmail) throw new CustomError("user email already exists", 409);
+
+        const existingUserUsername = await UserModel.findOne({ username: data.body.username });
+        if (existingUserUsername) throw new CustomError("user username already exists", 409);
 
         const passwordHash = await bcrypt.hash(data.body.password, CONFIGS.BCRYPT_SALT);
 
