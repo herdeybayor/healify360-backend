@@ -11,7 +11,6 @@ class AuthService {
     async register({ body }: Partial<Request>) {
         const { error, value: data } = Joi.object({
             body: Joi.object({
-                name: Joi.string().required(),
                 password: Joi.string().required(),
                 username: Joi.string().required(),
                 email: Joi.string().email().required(),
