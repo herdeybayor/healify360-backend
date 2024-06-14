@@ -11,4 +11,12 @@ const connectMongoDB = async () => {
     }
 };
 
+mongoose.Query.prototype.setOptions = function () {
+    if (this.mongooseOptions().lean == null) {
+        this.mongooseOptions({ lean: true });
+    }
+
+    return this;
+};
+
 export { connectMongoDB };

@@ -1,0 +1,106 @@
+meta {
+  name: Create Profile
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{API_BASE_URL}}/doctors/profile/create
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{ACCESS_TOKEN}}
+}
+
+body:json {
+  {
+    "bio": "Dr. John Doe is a highly experienced cardiologist with over 20 years of practice.",
+    "full_name": "John Doe",
+    "date_of_birth": "1970-01-01",
+    "gender": "M",
+    "years_of_experience": 20,
+    "home_address": {
+      "city": "Los Angeles",
+      "state": "California",
+      "street": "1234 Elm Street",
+      "country": "USA"
+    },
+    "phone_number": {
+      "code": "+1",
+      "number": "5551234567"
+    },
+    "specialization": "Cardiology",
+    "sub_specialization": "Interventional Cardiology",
+    "education": [
+      {
+        "year": 1995,
+        "institution": "Harvard Medical School",
+        "field_of_study": "Medicine",
+        "degree": "MD"
+      },
+      {
+        "year": 2000,
+        "institution": "Johns Hopkins Hospital",
+        "field_of_study": "Internal Medicine",
+        "degree": "Residency"
+      },
+      {
+        "year": 2003,
+        "institution": "Mayo Clinic",
+        "field_of_study": "Cardiology",
+        "degree": "Fellowship"
+      }
+    ],
+    "medical_license": "123456789",
+    "states_of_licensure": [
+      {
+        "state": "California",
+        "license_number": "CA-12345"
+      },
+      {
+        "state": "New York",
+        "license_number": "NY-67890"
+      }
+    ],
+    "malpractice_insurance_details": {
+      "provider": "Insurance Company Name",
+      "policy_number": "POL123456",
+      "coverage_amount_in_dollars": 1000000
+    },
+    "services_provided": {
+      "procedures": [
+        "Coronary Artery Bypass Grafting",
+        "Endoscopy",
+        "Angioplasty"
+      ],
+      "conditions_treated": [
+        "Diabetes Mellitus",
+        "Hypertension",
+        "Coronary Artery Disease"
+      ]
+    },
+    "awards": [
+      {
+        "title": "Best Cardiologist",
+        "year": 2018
+      },
+      {
+        "title": "Top Doctor Award",
+        "year": 2020
+      }
+    ],
+    "publication": [
+      {
+        "title": "Advanced Techniques in Cardiology",
+        "year": 2015
+      },
+      {
+        "title": "Cardiology Today",
+        "year": 2017
+      }
+    ]
+  }
+  
+}

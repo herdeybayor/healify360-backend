@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { IUser } from "@/models/user.model";
 
-const EDUCATION_TYPES = {
+export const EDUCATION_TYPES = {
     MD: {
         enumValue: "MD",
         fullName: "Doctor of Medicine",
@@ -72,7 +72,7 @@ const EDUCATION_TYPES = {
     },
 } as const;
 
-const SPECIALIZATION = {
+export const SPECIALIZATION = {
     Cardiology: ["Interventional Cardiology", "Electrophysiology", "Heart Failure & Transplantation", "Preventive Cardiology", "Nuclear Cardiology"],
     Dermatology: ["Pediatric Dermatology", "Dermatopathology", "Mohs Surgery", "Cosmetic Dermatology"],
     Endocrinology: ["Diabetes", "Thyroid Disorders", "Bone and Mineral Metabolism", "Endocrine Oncology", "Pediatric Endocrinology"],
@@ -90,6 +90,7 @@ interface IDoctorProfile extends mongoose.Document {
     full_name: string;
     date_of_birth: Date;
     gender: "M" | "F" | "R";
+    years_of_experience: number;
     home_address: {
         city: string;
         state: string;
@@ -154,33 +155,45 @@ const doctorProfileSchema = new mongoose.Schema<IDoctorProfile>(
             enum: ["M", "F", "R"],
             required: true,
         },
+        years_of_experience: {
+            type: Number,
+            required: true,
+        },
         home_address: {
-            city: {
-                type: String,
-                required: true,
+            type: {
+                city: {
+                    type: String,
+                    required: true,
+                },
+                state: {
+                    type: String,
+                    required: true,
+                },
+                street: {
+                    type: String,
+                    required: true,
+                },
+                country: {
+                    type: String,
+                    required: true,
+                },
             },
-            state: {
-                type: String,
-                required: true,
-            },
-            street: {
-                type: String,
-                required: true,
-            },
-            country: {
-                type: String,
-                required: true,
-            },
+            required: true,
+            _id: false,
         },
         phone_number: {
-            code: {
-                type: String,
-                required: true,
+            type: {
+                code: {
+                    type: String,
+                    required: true,
+                },
+                number: {
+                    type: String,
+                    required: true,
+                },
             },
-            number: {
-                type: String,
-                required: true,
-            },
+            required: true,
+            _id: false,
         },
         specialization: {
             type: String,
@@ -192,91 +205,121 @@ const doctorProfileSchema = new mongoose.Schema<IDoctorProfile>(
             required: true,
             enum: Object.values(SPECIALIZATION).flat(),
         },
-        education: [
-            {
-                year: {
-                    type: Number,
-                    required: true,
+        education: {
+            type: [
+                {
+                    year: {
+                        type: Number,
+                        required: true,
+                    },
+                    institution: {
+                        type: String,
+                        required: true,
+                    },
+                    field_of_study: {
+                        type: String,
+                        required: true,
+                    },
+                    degree: {
+                        type: String,
+                        enum: Object.values(EDUCATION_TYPES).map((item) => item.enumValue),
+                        required: true,
+                    },
                 },
-                institution: {
-                    type: String,
-                    required: true,
-                },
-                field_of_study: {
-                    type: String,
-                    required: true,
-                },
-                degree: {
-                    type: String,
-                    enum: Object.values(EDUCATION_TYPES).map((item) => item.enumValue),
-                    required: true,
-                },
-            },
-        ],
+            ],
+            required: true,
+            _id: false,
+            default: [],
+        },
         medical_license: {
             type: String,
             required: true,
         },
-        states_of_licensure: [
-            {
-                state: {
-                    type: String,
-                    required: true,
+        states_of_licensure: {
+            type: [
+                {
+                    state: {
+                        type: String,
+                        required: true,
+                    },
+                    license_number: {
+                        type: String,
+                        required: true,
+                    },
                 },
-                license_number: {
-                    type: String,
-                    required: true,
-                },
-            },
-        ],
+            ],
+            required: true,
+            _id: false,
+            default: [],
+        },
         malpractice_insurance_details: {
-            provider: {
-                type: String,
-                required: true,
+            type: {
+                provider: {
+                    type: String,
+                    required: true,
+                },
+                policy_number: {
+                    type: String,
+                    required: true,
+                },
+                coverage_amount_in_dollars: {
+                    type: Number,
+                    required: true,
+                },
             },
-            policy_number: {
-                type: String,
-                required: true,
-            },
-            coverage_amount_in_dollars: {
-                type: Number,
-                required: true,
-            },
+            required: true,
+            _id: false,
         },
         services_provided: {
-            procedures: {
-                type: [String],
-                required: true,
+            type: {
+                procedures: {
+                    type: [String],
+                    required: true,
+                    default: [],
+                },
+                conditions_treated: {
+                    type: [String],
+                    required: true,
+                    default: [],
+                },
             },
-            conditions_treated: {
-                type: [String],
-                required: true,
-            },
+            required: true,
+            _id: false,
         },
-        awards: [
-            {
-                title: {
-                    type: String,
-                    required: true,
+        awards: {
+            type: [
+                {
+                    title: {
+                        type: String,
+                        required: true,
+                    },
+                    year: {
+                        type: Number,
+                        required: true,
+                    },
                 },
-                year: {
-                    type: Number,
-                    required: true,
+            ],
+            required: true,
+            _id: false,
+            default: [],
+        },
+        publication: {
+            type: [
+                {
+                    title: {
+                        type: String,
+                        required: true,
+                    },
+                    year: {
+                        type: Number,
+                        required: true,
+                    },
                 },
-            },
-        ],
-        publication: [
-            {
-                title: {
-                    type: String,
-                    required: true,
-                },
-                year: {
-                    type: Number,
-                    required: true,
-                },
-            },
-        ],
+            ],
+            required: true,
+            _id: false,
+            default: [],
+        },
         user_ref: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "users",
