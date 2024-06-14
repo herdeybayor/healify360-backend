@@ -1,0 +1,80 @@
+meta {
+  name: Create Profile
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{API_BASE_URL}}/patients/profile/create
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{ACCESS_TOKEN}}
+}
+
+body:json {
+  {
+    "full_name": "John Doe",
+    "date_of_birth": "1990-05-15",
+    "gender": "M",
+    "phone_number": {
+      "code": "+1",
+      "number": "5551234567"
+    },
+    "major_illnesses": [
+      {
+        "name": "Hypertension",
+        "period": "2010-01-01"
+      },
+      {
+        "name": "Type 2 Diabetes",
+        "period": "2015-06-01"
+      }
+    ],
+    "surgeries": [
+      {
+        "name": "Appendectomy",
+        "period": "2012-08-15"
+      }
+    ],
+    "allergies": [
+      "Penicillin",
+      "Pollen"
+    ],
+    "family_medical_history": [
+      "Heart disease",
+      "Cancer"
+    ],
+    "current_medications": [
+      "Lisinopril",
+      "Metformin"
+    ],
+    "home_address": {
+      "city": "New York",
+      "state": "NY",
+      "street": "123 Main St",
+      "country": "USA"
+    },
+    "insurance_information": {
+      "provider": "ABC Insurance",
+      "policy_number": "POL987654321",
+      "group_number": "GRP123456789"
+    },
+    "emergency_contact": {
+      "name": "Jane Doe",
+      "email": "jane.doe@example.com",
+      "phone": "5559876543",
+      "relationship": "Spouse"
+    },
+    "preferences": {
+      "languages": ["English", "Spanish"],
+      "communication_preferences": ["Email", "Phone"],
+      "accessibility_needs": ["Wheelchair access"]
+    },
+    "occupation": "Engineer",
+    "ethnicity": "WHITE"
+  }
+  
+}

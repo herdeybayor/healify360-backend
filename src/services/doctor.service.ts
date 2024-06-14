@@ -76,11 +76,10 @@ class DoctorService {
             .options({ stripUnknown: true })
             .validate({ body, $currentUser });
         if (error) throw new CustomError(error.message, 400);
-        console.log(data.$currentUser);
+
         if (data.$currentUser.role !== "doctor") throw new CustomError(`only doctors can create doctor profile: ${data.$currentUser.role}`, 403);
 
         const existingProfile = await DoctorProfileModel.findOne({ user_ref: data.$currentUser._id });
-        console.log("B");
         if (existingProfile) throw new CustomError("profile already exists", 409);
 
         const createContext = {
@@ -107,6 +106,7 @@ class DoctorService {
         if (data.$currentUser.role !== "doctor") throw new CustomError(`only doctors can get doctor profile: ${data.$currentUser.role}`, 403);
 
         const profile = await DoctorProfileModel.findOne({ user_ref: data.$currentUser._id });
+        if (!profile) throw new CustomError("profile not found", 404);
 
         return profile;
     }
