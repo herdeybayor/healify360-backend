@@ -12,9 +12,8 @@ const GLOBAL_CONSTANTS = {
     APP_NAME: "Healify",
 
     BCRYPT_SALT: 10,
-    ACCESS_TOKEN_JWT_EXPIRES_IN: ms("1h"),
+    ACCESS_TOKEN_JWT_EXPIRES_IN: ms("30d"),
     REFRESH_TOKEN_JWT_EXPIRES_IN: ms("30d"),
-    DEFAULT_DB_TOKEN_EXPIRY_DURATION: ms("15m"),
 
     APP_ROLES: {
         ADMIN: ["admin"],

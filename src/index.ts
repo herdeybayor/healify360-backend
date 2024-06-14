@@ -1,7 +1,9 @@
-import "dotenv/config";
+import "express-async-errors";
+import routes from "@/routes";
 import express, { Express } from "express";
-import { configurePreRouteMiddleware } from "@/middleware/pre-route.middleware";
 import { connectMongoDB } from "@/libraries/mongodb";
+import { configureErrorMiddleware } from "@/middleware/error.middleware";
+import { configurePreRouteMiddleware } from "@/middleware/pre-route.middleware";
 
 const app: Express = express();
 
@@ -13,6 +15,11 @@ configurePreRouteMiddleware(app);
 app.get("/", (_, res) => {
     res.send({ message: "Hello World! from Healify360" }).status(200);
 });
+
+// Routes
+app.use(routes);
+
+configureErrorMiddleware(app);
 
 // Listen to server port
 app.listen(PORT, async () => {
