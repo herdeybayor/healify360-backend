@@ -17,7 +17,10 @@ const GLOBAL_CONSTANTS = {
     DEFAULT_DB_TOKEN_EXPIRY_DURATION: ms("15m"),
 
     APP_ROLES: {
-        USER: ["user"],
+        ADMIN: ["admin"],
+        DOCTOR: ["doctor", "admin"],
+        PATIENT: ["patient", "admin"],
+        USER: ["patient", "doctor", "admin"],
     },
 
     MAILER: {
@@ -47,14 +50,13 @@ const CONFIG_BUILDER = {
         ...GLOBAL_CONSTANTS,
 
         URL: {
-            API_BASE_URL: "https://api.example.com",
             AUTH_BASE_URL: "https://example.com",
+            API_BASE_URL: "https://api.example.com",
             LANDING_BASE_URL: "https://example.com",
         },
 
         JWT_SECRET: "T4u2Rcnne09F.FBr11f0VvERyUiq",
 
-        REDIS_URI: "redis://default:ymJjfRlnWLSGhcvWfTODPgK5qzrW12op@redis-14332.c14.us-east-1-3.ec2.redns.redis-cloud.com:14332",
         MONGODB_URI: "mongodb+srv://toluolatubosun:PycclWtgYu5LOBFc@cluster0.o2qgaov.mongodb.net/healify360?retryWrites=true&w=majority",
 
         // App Level Configs
@@ -66,14 +68,13 @@ const CONFIG_BUILDER = {
         ...GLOBAL_CONSTANTS,
 
         URL: {
-            API_BASE_URL: "https://api.example.com",
             AUTH_BASE_URL: "https://example.com",
+            API_BASE_URL: "https://api.example.com",
             LANDING_BASE_URL: "https://example.com",
         },
 
         JWT_SECRET: process.env.JWT_SECRET!,
 
-        REDIS_URI: process.env.REDIS_URI!,
         MONGODB_URI: process.env.MONGO_ATLAS_URI!,
 
         CORS_ALLOWED_ORIGINS: ["https://example.com", "https://www.example.com"],
