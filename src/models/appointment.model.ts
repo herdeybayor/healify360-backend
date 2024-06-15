@@ -18,23 +18,23 @@ const appointmentSchema = new mongoose.Schema<IAppointment>(
     {
         doctor_ref: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "User",
+            ref: "users",
             required: true,
         },
         doctor_profile_ref: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "DoctorProfile",
+            ref: "doctor-profiles",
             required: true,
         },
 
         patient_ref: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "User",
+            ref: "users",
             required: true,
         },
         patient_profile_ref: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "PatientProfile",
+            ref: "patient-profiles",
             required: true,
         },
     },
