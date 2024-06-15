@@ -4,6 +4,8 @@ import { Request, Response, NextFunction } from "express";
 import { CONFIGS } from "@/configs";
 import User from "@/models/user.model";
 import CustomError from "@/utilities/custom-error";
+import DoctorProfile from "@/models/doctor-profile.model";
+import PatientProfile from "@/models/patient-profile.model";
 
 function auth(roles: string[] = []) {
     roles = roles.length > 0 ? roles : CONFIGS.APP_ROLES.USER;
@@ -24,6 +26,20 @@ function auth(roles: string[] = []) {
         if (!roles.includes(user.role)) throw new CustomError("-middleware/user-not-authorized", 401);
 
         req.$currentUser = user;
+
+        if (user.role === "doctor") {
+            const doctorProfile = await DoctorProfile.findOne({ user_ref: user._id });
+            if (doctorProfile) {
+                req.$currentDoctorProfile = doctorProfile;
+            }
+        }
+
+        if (user.role === "patient") {
+            const patientProfile = await PatientProfile.findOne({ user_ref: user._id });
+            if (patientProfile) {
+                req.$currentPatientProfile = patientProfile;
+            }
+        }
 
         next();
     };
