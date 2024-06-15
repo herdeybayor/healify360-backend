@@ -4,6 +4,9 @@ import { IPatientProfile } from "@/models/patient-profile.model";
 import { IDoctorProfile } from "@/models/doctor-profile.model";
 
 interface IAppointment extends mongoose.Document {
+    message: string;
+    date_time: Date;
+
     doctor_ref: IUser | mongoose.Types.ObjectId;
     doctor_profile_ref: IDoctorProfile | mongoose.Types.ObjectId;
 
@@ -16,6 +19,15 @@ interface IAppointment extends mongoose.Document {
 
 const appointmentSchema = new mongoose.Schema<IAppointment>(
     {
+        message: {
+            type: String,
+            required: true,
+        },
+        date_time: {
+            type: Date,
+            required: true,
+        },
+
         doctor_ref: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "users",
