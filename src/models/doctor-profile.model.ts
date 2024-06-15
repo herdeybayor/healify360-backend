@@ -324,6 +324,7 @@ const doctorProfileSchema = new mongoose.Schema<IDoctorProfile>(
             type: mongoose.Schema.Types.ObjectId,
             ref: "users",
             required: true,
+            unique: true,
         },
     },
     {
