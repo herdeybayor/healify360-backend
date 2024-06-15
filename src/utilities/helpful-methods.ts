@@ -14,3 +14,10 @@ export const trimObjectStrings = (obj: any) => {
         return obj;
     }
 };
+
+export const parseDate = (date: string): Date => {
+    date = date.trim(); // trim date
+    date = date.replace(/\s/g, "+"); // replace all spaces with +
+
+    return new Date(Date.parse(date));
+};

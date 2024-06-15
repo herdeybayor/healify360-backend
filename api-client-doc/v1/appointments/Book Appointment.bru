@@ -1,0 +1,24 @@
+meta {
+  name: Book Appointment
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{API_BASE_URL}}/appointments/book
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{ACCESS_TOKEN}}
+}
+
+body:json {
+  {
+    "message": "I no sick, but they say make I see doctor",
+    // please send the date in this format exactly
+    "date_time": "2024-06-28T21:00:00+01:00",
+    "doctor_id": "666e0de6cc061c723a3557d9"
+  }
+}

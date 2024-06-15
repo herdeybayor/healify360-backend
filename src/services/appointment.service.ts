@@ -2,6 +2,7 @@ import Joi from "joi";
 import { Request } from "express";
 
 import CustomError from "@/utilities/custom-error";
+import { parseDate } from "@/utilities/helpful-methods";
 import AppointmentModel from "@/models/appointment.model";
 import DoctorProfileModel from "@/models/doctor-profile.model";
 
@@ -10,7 +11,7 @@ class AppointmentService {
         const { error, value: data } = Joi.object({
             body: Joi.object({
                 message: Joi.string().required(),
-                date_time: Joi.date().required(),
+                date_time: Joi.string().required(),
                 doctor_id: Joi.string().required(),
             }),
             $currentUser: Joi.object({
@@ -29,14 +30,18 @@ class AppointmentService {
 
         const createContext = {
             message: data.body.message,
-            date_time: data.body.date_time,
+            date_time: parseDate(data.body.date_time),
 
-            doctor_ref: data.body.doctor_ref,
+            doctor_ref: data.body.doctor_id,
             doctor_profile_ref: doctorProfile._id,
 
             patient_ref: data.$currentUser._id,
             patient_profile_ref: data.$currentPatientProfile._id,
         };
+
+        // check if doctor is available at the specified date and time
+        const existingAppointment = await AppointmentModel.findOne({ doctor_ref: createContext.doctor_ref, date_time: createContext.date_time });
+        if (existingAppointment) throw new CustomError("doctor is not available at the specified date and time", 400);
 
         const appointment = await new AppointmentModel(createContext).save();
 
