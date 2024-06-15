@@ -85,7 +85,7 @@ export const SPECIALIZATION = {
     Urology: ["Pediatric Urology", "Urologic Oncology", "Female Pelvic Medicine and Reconstructive Surgery", "Male Infertility", "Endourology"],
 } as const;
 
-interface IDoctorProfile extends mongoose.Document {
+export interface IDoctorProfile extends mongoose.Document {
     bio: string;
     full_name: string;
     date_of_birth: Date;

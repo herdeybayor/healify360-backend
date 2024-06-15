@@ -32,7 +32,7 @@ export const ETHNICITY = {
     },
 };
 
-interface IPatientProfile extends mongoose.Document {
+export interface IPatientProfile extends mongoose.Document {
     full_name: string;
     date_of_birth: Date;
     gender: "M" | "F" | "R";

@@ -1,0 +1,49 @@
+import mongoose from "mongoose";
+import { IUser } from "@/models/user.model";
+import { IPatientProfile } from "@/models/patient-profile.model";
+import { IDoctorProfile } from "@/models/doctor-profile.model";
+
+interface IAppointment extends mongoose.Document {
+    doctor_ref: IUser | mongoose.Types.ObjectId;
+    doctor_profile_ref: IDoctorProfile | mongoose.Types.ObjectId;
+
+    patient_ref: IUser | mongoose.Types.ObjectId;
+    patient_profile_ref: IPatientProfile | mongoose.Types.ObjectId;
+
+    created_at: Date;
+    updated_at: Date;
+}
+
+const appointmentSchema = new mongoose.Schema<IAppointment>(
+    {
+        doctor_ref: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+            required: true,
+        },
+        doctor_profile_ref: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "DoctorProfile",
+            required: true,
+        },
+
+        patient_ref: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+            required: true,
+        },
+        patient_profile_ref: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "PatientProfile",
+            required: true,
+        },
+    },
+    {
+        timestamps: {
+            createdAt: "created_at",
+            updatedAt: "updated_at",
+        },
+    }
+);
+
+export default mongoose.model<IAppointment>("appointments", appointmentSchema);
