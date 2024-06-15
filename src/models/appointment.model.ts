@@ -3,7 +3,7 @@ import { IUser } from "@/models/user.model";
 import { IPatientProfile } from "@/models/patient-profile.model";
 import { IDoctorProfile } from "@/models/doctor-profile.model";
 
-interface IAppointment extends mongoose.Document {
+export interface IAppointment extends mongoose.Document {
     message: string;
     date_time: Date;
 
