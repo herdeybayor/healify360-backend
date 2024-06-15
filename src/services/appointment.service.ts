@@ -6,7 +6,7 @@ import AppointmentModel from "@/models/appointment.model";
 import DoctorProfileModel from "@/models/doctor-profile.model";
 
 class AppointmentService {
-    async createAppointment({ body, $currentUser, $currentPatientProfile }: Request) {
+    async bookAppointment({ body, $currentUser, $currentPatientProfile }: Request) {
         const { error, value: data } = Joi.object({
             body: Joi.object({
                 message: Joi.string().required(),
@@ -44,4 +44,4 @@ class AppointmentService {
     }
 }
 
-export default AppointmentService;
+export default new AppointmentService();
