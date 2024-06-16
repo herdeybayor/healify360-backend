@@ -1,0 +1,46 @@
+meta {
+  name: prescriptions
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{API_BASE_URL}}/prescriptions/create
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{ACCESS_TOKEN}}
+}
+
+body:json {
+  {
+    "text": "Prescription for managing hypertension and diabetes.",
+    "appointment_id": "666e109d475ebcbb3ff15e83",
+    "medications": [
+      {
+        "name": "Lisinopril",
+        "dosage": "10 mg",
+        "quantity": "30",
+        "usage_instruction": "Take one tablet daily in the morning",
+        "form": "TABLET"
+      },
+      {
+        "name": "Metformin",
+        "dosage": "500 mg",
+        "quantity": "60",
+        "usage_instruction": "Take one tablet twice a day with meals",
+        "form": "TABLET"
+      },
+      {
+        "name": "Albuterol",
+        "dosage": "90 mcg",
+        "quantity": "1",
+        "usage_instruction": "Use as needed for wheezing",
+        "form": "INHALER"
+      }
+    ]
+  }
+  
+}
