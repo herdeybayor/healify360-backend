@@ -56,6 +56,8 @@ export const MEDICATION_FORM = {
 };
 
 export interface IPrescription extends mongoose.Document {
+    text: string;
+
     medications: {
         name: string;
         dosage: string;
@@ -78,6 +80,10 @@ export interface IPrescription extends mongoose.Document {
 
 const prescriptionSchema = new mongoose.Schema<IPrescription>(
     {
+        text: {
+            type: String,
+            required: true,
+        },
         medications: {
             type: [
                 {

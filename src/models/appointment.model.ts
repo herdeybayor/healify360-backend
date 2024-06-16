@@ -3,9 +3,25 @@ import { IUser } from "@/models/user.model";
 import { IPatientProfile } from "@/models/patient-profile.model";
 import { IDoctorProfile } from "@/models/doctor-profile.model";
 
+export const APPOINTMENT_STATUS = {
+    PENDING: {
+        enumValue: "PENDING",
+        displayName: "Pending",
+    },
+    CANCELLED: {
+        enumValue: "CANCELLED",
+        displayName: "Cancelled",
+    },
+    COMPLETED: {
+        enumValue: "COMPLETED",
+        displayName: "Completed",
+    },
+};
+
 export interface IAppointment extends mongoose.Document {
     message: string;
     date_time: Date;
+    status: (typeof APPOINTMENT_STATUS)[keyof typeof APPOINTMENT_STATUS]["enumValue"];
 
     doctor_ref: IUser | mongoose.Types.ObjectId;
     doctor_profile_ref: IDoctorProfile | mongoose.Types.ObjectId;
@@ -26,6 +42,11 @@ const appointmentSchema = new mongoose.Schema<IAppointment>(
         date_time: {
             type: Date,
             required: true,
+        },
+        status: {
+            type: String,
+            enum: Object.values(APPOINTMENT_STATUS).map((s) => s.enumValue),
+            default: APPOINTMENT_STATUS.PENDING.enumValue,
         },
 
         doctor_ref: {
