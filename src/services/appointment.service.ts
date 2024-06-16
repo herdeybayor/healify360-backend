@@ -3,8 +3,8 @@ import { Request } from "express";
 
 import CustomError from "@/utilities/custom-error";
 import { parseDate } from "@/utilities/helpful-methods";
-import AppointmentModel from "@/models/appointment.model";
 import DoctorProfileModel from "@/models/doctor-profile.model";
+import AppointmentModel, { APPOINTMENT_STATUS } from "@/models/appointment.model";
 
 class AppointmentService {
     async bookAppointment({ body, $currentUser, $currentPatientProfile }: Request) {
@@ -66,10 +66,40 @@ class AppointmentService {
 
         // current user must be the patient who booked the appointment or the doctor who is to attend to the patient
         if (String(appointment.patient_ref) !== String(data.$currentUser._id) && String(appointment.doctor_ref) !== String(data.$currentUser._id)) {
-            throw new CustomError("can not access appointment", 403);
+            throw new CustomError("unauthorized can not access appointment", 403);
         }
 
         return appointment;
+    }
+
+    async updateAppointmentStatus({ params, body, $currentUser }: Request) {
+        const { error, value: data } = Joi.object({
+            params: Joi.object({
+                appointmentId: Joi.string().required(),
+            }),
+            body: Joi.object({
+                status: Joi.string()
+                    .valid(...Object.values(APPOINTMENT_STATUS).map((status) => status.enumValue))
+                    .required(),
+            }),
+            $currentUser: Joi.object({
+                _id: Joi.required(),
+            }).required(),
+        })
+            .options({ stripUnknown: true })
+            .validate({ params, body, $currentUser });
+        if (error) throw new CustomError(error.message, 400);
+
+        const appointment = await AppointmentModel.findOne({ _id: data.params.appointmentId });
+        if (!appointment) throw new CustomError("appointment not found", 404);
+
+        if (String(appointment.doctor_ref) !== String(data.$currentUser._id) && String(appointment.patient_ref) !== String(data.$currentUser._id)) {
+            throw new CustomError("unauthorized can not update appointment status", 403);
+        }
+
+        await AppointmentModel.updateOne({ _id: data.params.appointmentId }, { status: data.body.status });
+
+        return { ...appointment, status: data.body.status };
     }
 }
 

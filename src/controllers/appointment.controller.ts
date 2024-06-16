@@ -13,6 +13,11 @@ class AppointmentController {
         const result = await AppointmentService.getOneAppointment(req);
         res.status(200).send(response("appointment retrieved", result));
     }
+
+    async updateAppointmentStatus(req: Request, res: Response) {
+        const result = await AppointmentService.updateAppointmentStatus(req);
+        res.status(200).send(response("appointment status updated", result));
+    }
 }
 
 export default new AppointmentController();

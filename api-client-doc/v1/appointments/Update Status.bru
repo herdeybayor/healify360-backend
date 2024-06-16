@@ -1,0 +1,21 @@
+meta {
+  name: Update Status
+  type: http
+  seq: 3
+}
+
+patch {
+  url: {{API_BASE_URL}}/appointments/status/666ebfc6897a42b163c9b26d
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{ACCESS_TOKEN}}
+}
+
+body:json {
+  {
+    "status": "COMPLETED"
+  }
+}
