@@ -1,0 +1,15 @@
+meta {
+  name: Get By Id
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{API_BASE_URL}}/prescriptions/666ed607cd58583e4dc4b0e3
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{ACCESS_TOKEN}}
+}

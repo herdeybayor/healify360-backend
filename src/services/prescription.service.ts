@@ -60,6 +60,39 @@ class PrescriptionService {
 
         return prescription;
     }
+
+    async getOneById({ params }: Partial<Request>) {
+        const { error, value: data } = Joi.object({
+            params: Joi.object({
+                prescriptionId: Joi.string().required(),
+            }),
+        })
+
+            .options({ stripUnknown: true })
+            .validate({ params });
+        if (error) throw new CustomError(error.message, 400);
+
+        const prescription = await PrescriptionModel.findOne({ _id: data.params.prescriptionId });
+        if (!prescription) throw new CustomError("Prescription not found", 404);
+
+        return prescription;
+    }
+
+    async getOneByAppointmentId({ params }: Partial<Request>) {
+        const { error, value: data } = Joi.object({
+            params: Joi.object({
+                appointmentId: Joi.string().required(),
+            }),
+        })
+
+            .options({ stripUnknown: true })
+            .validate({ params });
+        if (error) throw new CustomError(error.message, 400);
+
+        const prescription = await PrescriptionModel.findOne({ appointment_ref: data.params.appointmentId });
+
+        return prescription;
+    }
 }
 
 export default new PrescriptionService();
