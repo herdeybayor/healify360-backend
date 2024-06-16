@@ -2,6 +2,8 @@ import Joi from "joi";
 import { Request } from "express";
 
 import CustomError from "@/utilities/custom-error";
+import PrescriptionModel from "@/models/prescription.model";
+import AppointmentModel, { APPOINTMENT_STATUS } from "@/models/appointment.model";
 import DoctorProfileModel, { SPECIALIZATION, EDUCATION_TYPES } from "@/models/doctor-profile.model";
 
 class DoctorService {
@@ -109,6 +111,30 @@ class DoctorService {
         if (!profile) throw new CustomError("profile not found", 404);
 
         return profile;
+    }
+
+    async getDashboard({ $currentUser }: Partial<Request>) {
+        const { error, value: data } = Joi.object({
+            $currentUser: Joi.object({
+                _id: Joi.required(),
+            }).required(),
+        })
+            .options({ stripUnknown: true })
+            .validate({ $currentUser });
+        if (error) throw new CustomError(error.message, 400);
+
+        const totalConsultations = await AppointmentModel.countDocuments({ doctor_ref: data.$currentUser._id });
+        const totalPrescriptionsSent = await PrescriptionModel.countDocuments({ doctor_ref: data.$currentUser._id });
+        const upcomingAppointmentsCount = await AppointmentModel.countDocuments({ status: APPOINTMENT_STATUS.PENDING.enumValue, doctor_ref: data.$currentUser._id });
+
+        const upcomingAppointments = await AppointmentModel.find({ status: APPOINTMENT_STATUS.PENDING.enumValue, doctor_ref: data.$currentUser._id });
+
+        return {
+            total_consultations: totalConsultations,
+            total_prescriptions_sent: totalPrescriptionsSent,
+            upcoming_appointments_count: upcomingAppointmentsCount,
+            upcoming_appointments: upcomingAppointments,
+        };
     }
 }
 

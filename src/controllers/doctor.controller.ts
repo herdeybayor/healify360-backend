@@ -13,6 +13,11 @@ class DoctorController {
         const result = await DoctorService.getUserProfile(req);
         res.status(200).send(response("doctor profile retrieved", result));
     }
+
+    async getDashboard(req: Request, res: Response) {
+        const result = await DoctorService.getDashboard(req);
+        res.status(200).send(response("doctor dashboard retrieved", result));
+    }
 }
 
 export default new DoctorController();

@@ -9,4 +9,6 @@ router.post("/profile/create", auth(CONFIGS.APP_ROLES.DOCTOR), DoctorCtrl.create
 
 router.get("/profile/get", auth(CONFIGS.APP_ROLES.DOCTOR), DoctorCtrl.getUserProfile);
 
+router.get("/dashboard", auth(CONFIGS.APP_ROLES.DOCTOR), DoctorCtrl.getDashboard);
+
 export default router;
