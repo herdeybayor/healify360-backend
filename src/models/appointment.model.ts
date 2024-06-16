@@ -1,7 +1,9 @@
 import mongoose from "mongoose";
+import paginate from "mongoose-paginate-v2";
+
 import { IUser } from "@/models/user.model";
-import { IPatientProfile } from "@/models/patient-profile.model";
 import { IDoctorProfile } from "@/models/doctor-profile.model";
+import { IPatientProfile } from "@/models/patient-profile.model";
 
 export const APPOINTMENT_STATUS = {
     PENDING: {
@@ -79,4 +81,6 @@ const appointmentSchema = new mongoose.Schema<IAppointment>(
     }
 );
 
-export default mongoose.model<IAppointment>("appointments", appointmentSchema);
+appointmentSchema.plugin(paginate);
+
+export default mongoose.model<IAppointment, mongoose.PaginateModel<IAppointment>>("appointments", appointmentSchema);
