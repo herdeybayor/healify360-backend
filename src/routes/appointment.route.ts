@@ -7,4 +7,6 @@ const router: Router = Router();
 
 router.post("/book", auth(CONFIGS.APP_ROLES.PATIENT), AppointmentCtrl.bookAppointment);
 
+router.get("/:appointmentId", auth(CONFIGS.APP_ROLES.USER), AppointmentCtrl.getOneAppointment);
+
 export default router;

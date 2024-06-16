@@ -1,0 +1,15 @@
+meta {
+  name: Get One
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{API_BASE_URL}}/appointments/666ebfc6897a42b163c9b26d
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{ACCESS_TOKEN}}
+}

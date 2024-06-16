@@ -8,6 +8,11 @@ class AppointmentController {
         const result = await AppointmentService.bookAppointment(req);
         res.status(201).send(response("appointment booked", result));
     }
+
+    async getOneAppointment(req: Request, res: Response) {
+        const result = await AppointmentService.getOneAppointment(req);
+        res.status(200).send(response("appointment retrieved", result));
+    }
 }
 
 export default new AppointmentController();
