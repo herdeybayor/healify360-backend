@@ -13,6 +13,11 @@ class MessageController {
         const result = await MessageService.pusherAuthenticateUser(req);
         res.status(200).json(result);
     }
+
+    async pusherAuthorizeChannel(req: Request, res: Response) {
+        const result = await MessageService.pusherAuthorizeChannel(req);
+        res.status(200).json(result);
+    }
 }
 
 export default new MessageController();

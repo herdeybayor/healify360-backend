@@ -4,8 +4,8 @@ import { Request } from "express";
 import UserModel from "@/models/user.model";
 import MessageModel from "@/models/message.model";
 import CustomError from "@/utilities/custom-error";
-import { authenticateUser } from "@/libraries/pusher";
 import AppointmentModel from "@/models/appointment.model";
+import { authenticateUser, authorizeChannel } from "@/libraries/pusher";
 
 class MessageService {
     async create({ body, $currentUser }: Partial<Request>) {
@@ -64,6 +64,39 @@ class MessageService {
         const userAuthResponse = authenticateUser(data.body.socket_id, payload);
 
         return userAuthResponse;
+    }
+
+    async pusherAuthorizeChannel({ body, $currentUser }: Partial<Request>) {
+        const { error, value: data } = Joi.object({
+            body: Joi.object({
+                socket_id: Joi.string().required(),
+                channel_name: Joi.string().required(),
+            }).required(),
+            $currentUser: Joi.object({
+                _id: Joi.required(),
+            }).required(),
+        })
+            .options({ stripUnknown: true })
+            .validate({ body, $currentUser });
+        if (error) throw new CustomError(error.message, 400);
+
+        const channelNameParts = data.body.channel_name.split("-");
+        const appointmentId = channelNameParts[channelNameParts.length - 1];
+
+        const appointment = await AppointmentModel.findOne({ _id: appointmentId });
+        if (!appointment) throw new CustomError("appointment not found", 404);
+
+        const user = await UserModel.findOne({ _id: data.$currentUser._id });
+        if (!user) throw new CustomError("user not found", 404);
+
+        const userObjectFormatted = {
+            user_id: String(user._id),
+            user_info: { ...user, _id: String(user._id), password: undefined },
+        };
+
+        const authResponse = authorizeChannel(data.body.socket_id, data.body.channel_name, userObjectFormatted);
+
+        return authResponse;
     }
 }
 
