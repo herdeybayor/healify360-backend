@@ -13,7 +13,7 @@ class MessageService {
                 appointment_id: Joi.string().required(),
             }).required(),
             $currentUser: Joi.object({
-                id: Joi.string().required(),
+                _id: Joi.required(),
             }).required(),
         })
             .options({ stripUnknown: true })
@@ -23,14 +23,14 @@ class MessageService {
         const appointment = await AppointmentModel.findOne({ _id: data.body.appointment_id });
         if (!appointment) throw new CustomError("appointment not found", 404);
 
-        if (String(appointment.patient_ref) !== data.$currentUser.id && String(appointment.doctor_ref) !== data.$currentUser.id) {
+        if (String(appointment.patient_ref) !== String(data.$currentUser._id) && String(appointment.doctor_ref) !== String(data.$currentUser._id)) {
             throw new CustomError("unauthorized access, you are not part of this appointment", 403);
         }
 
         const createContext = {
             message: data.body.message,
             appointment_ref: appointment._id,
-            sender_ref: data.$currentUser.id,
+            sender_ref: data.$currentUser._id,
         };
 
         const message = await new MessageModel(createContext).save();

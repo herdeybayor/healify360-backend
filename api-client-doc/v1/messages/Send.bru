@@ -1,0 +1,22 @@
+meta {
+  name: Send
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{API_BASE_URL}}/messages/send
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{ACCESS_TOKEN}}
+}
+
+body:json {
+  {
+    "message": "Hi bro!",
+    "appointment_id": "666e109d475ebcbb3ff15e83"
+  }
+}
