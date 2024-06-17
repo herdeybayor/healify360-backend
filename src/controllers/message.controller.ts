@@ -8,6 +8,11 @@ class MessageController {
         const result = await MessageService.create(req);
         res.status(201).send(response("message created", result));
     }
+
+    async pusherAuthenticateUser(req: Request, res: Response) {
+        const result = await MessageService.pusherAuthenticateUser(req);
+        res.status(200).json(result);
+    }
 }
 
 export default new MessageController();
