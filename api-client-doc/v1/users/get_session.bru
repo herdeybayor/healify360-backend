@@ -1,0 +1,11 @@
+meta {
+  name: get_session
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{API_BASE_URL}}/users/session
+  body: json
+  auth: inherit
+}

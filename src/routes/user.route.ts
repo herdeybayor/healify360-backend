@@ -5,6 +5,6 @@ import UserCtrl from "@/controllers/user.controller";
 
 const router: Router = Router();
 
-router.post("/session", auth(CONFIGS.APP_ROLES.USER), UserCtrl.getSession);
+router.get("/session", auth(CONFIGS.APP_ROLES.USER), UserCtrl.getSession);
 
 export default router;
