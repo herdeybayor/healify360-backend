@@ -40,11 +40,11 @@ const messageSchema = new mongoose.Schema<IMessage>(
         },
         doctor_profile_ref: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "doctor_profiles",
+            ref: "doctor-profiles",
         },
         patient_profile_ref: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "patient_profiles",
+            ref: "patient-profiles",
         },
     },
     {
