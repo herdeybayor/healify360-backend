@@ -35,7 +35,7 @@ class AuthService {
         const user = await UserModel.create(createContext);
         user.password = undefined;
 
-        const accessToken = JWT.sign({ _id: user._id }, CONFIGS.JWT_SECRET, { expiresIn: CONFIGS.ACCESS_TOKEN_JWT_EXPIRES_IN / 1000 });
+        const accessToken = JWT.sign({ _id: user._id, role: user.role }, CONFIGS.JWT_SECRET, { expiresIn: CONFIGS.ACCESS_TOKEN_JWT_EXPIRES_IN / 1000 });
 
         return { user, token: { access_token: accessToken } };
     }
@@ -57,7 +57,7 @@ class AuthService {
         const isPasswordValid = await bcrypt.compare(data.body.password, user.password || "");
         if (!isPasswordValid) throw new CustomError("invalid password", 401);
 
-        const accessToken = JWT.sign({ _id: user._id }, CONFIGS.JWT_SECRET, { expiresIn: CONFIGS.ACCESS_TOKEN_JWT_EXPIRES_IN / 1000 });
+        const accessToken = JWT.sign({ _id: user._id, role: user.role }, CONFIGS.JWT_SECRET, { expiresIn: CONFIGS.ACCESS_TOKEN_JWT_EXPIRES_IN / 1000 });
 
         return { user, token: { access_token: accessToken } };
     }
