@@ -42,6 +42,13 @@ const GLOBAL_CONSTANTS = {
         ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID!,
         SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY!,
     },
+
+    PUSHER: {
+        APP_ID: process.env.PUSHER_APP_ID!,
+        APP_KEY: process.env.PUSHER_APP_KEY!,
+        APP_SECRET: process.env.PUSHER_APP_SECRET!,
+        APP_CLUSTER: process.env.PUSHER_APP_CLUSTER!,
+    },
 };
 
 const CONFIG_BUILDER = {
@@ -58,8 +65,6 @@ const CONFIG_BUILDER = {
 
         MONGODB_URI: "mongodb+srv://toluolatubosun:PycclWtgYu5LOBFc@cluster0.o2qgaov.mongodb.net/healify360?retryWrites=true&w=majority",
 
-        // App Level Configs
-        // ============================================================
         CORS_ALLOWED_ORIGINS: ["http://localhost:3000", "https://example.com"],
     },
 
