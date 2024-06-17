@@ -136,6 +136,40 @@ class DoctorService {
             upcoming_appointments: upcomingAppointments,
         };
     }
+
+    async findDoctors({ query }: Partial<Request>) {
+        const { error, value: data } = Joi.object({
+            query: Joi.object({
+                page: Joi.number().default(1),
+                limit: Joi.number().default(10),
+            }).required(),
+        })
+            .options({ stripUnknown: true })
+            .validate({ query });
+        if (error) throw new CustomError(error.message, 400);
+
+        const options = {
+            page: data.query.page,
+            limit: data.query.limit,
+            sort: { log_timestamp: -1 },
+            populate: { path: "user_ref", select: { _id: 1, email: 1 } },
+            customLabels: {
+                prevPage: "prev_page",
+                nextPage: "next_page",
+                totalDocs: "total_docs",
+                totalPages: "total_pages",
+                hasPrevPage: "has_prev_page",
+                hasNextPage: "has_next_page",
+                pagingCounter: "paging_counter",
+            },
+        };
+
+        const filter: Record<string, any> = {};
+
+        const { docs, ...pagination } = await DoctorProfileModel.paginate(filter, options);
+
+        return { doctors: docs, pagination };
+    }
 }
 
 export default new DoctorService();

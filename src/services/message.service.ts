@@ -99,9 +99,9 @@ class MessageService {
             appointment_ref: appointment._id,
         };
 
-        const messages = await MessageModel.paginate(filter, options);
+        const { docs, ...pagination } = await MessageModel.paginate(filter, options);
 
-        return messages;
+        return { messages: docs, pagination };
     }
 
     async pusherAuthenticateUser({ body, $currentUser }: Partial<Request>) {

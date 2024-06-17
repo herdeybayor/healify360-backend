@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import paginate from "mongoose-paginate-v2";
+
 import { IUser } from "@/models/user.model";
 
 export const EDUCATION_TYPES = {
@@ -335,4 +337,6 @@ const doctorProfileSchema = new mongoose.Schema<IDoctorProfile>(
     }
 );
 
-export default mongoose.model<IDoctorProfile>("doctor-profiles", doctorProfileSchema);
+doctorProfileSchema.plugin(paginate);
+
+export default mongoose.model<IDoctorProfile, mongoose.PaginateModel<IDoctorProfile>>("doctor-profiles", doctorProfileSchema);

@@ -11,4 +11,6 @@ router.get("/profile/get", auth(CONFIGS.APP_ROLES.DOCTOR), DoctorCtrl.getUserPro
 
 router.get("/dashboard", auth(CONFIGS.APP_ROLES.DOCTOR), DoctorCtrl.getDashboard);
 
+router.get("/find", auth(CONFIGS.APP_ROLES.PATIENT), DoctorCtrl.findDoctors);
+
 export default router;
