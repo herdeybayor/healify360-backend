@@ -5,13 +5,14 @@ import UserModel from "@/models/user.model";
 import MessageModel from "@/models/message.model";
 import CustomError from "@/utilities/custom-error";
 import AppointmentModel from "@/models/appointment.model";
-import { authenticateUser, authorizeChannel } from "@/libraries/pusher";
+import { authenticateUser, authorizeChannel, trigger } from "@/libraries/pusher";
 
 class MessageService {
     async create({ body, $currentUser }: Partial<Request>) {
         const { error, value: data } = Joi.object({
             body: Joi.object({
                 message: Joi.string().required(),
+                socket_id: Joi.string().optional(),
                 appointment_id: Joi.string().required(),
             }).required(),
             $currentUser: Joi.object({
@@ -36,6 +37,11 @@ class MessageService {
         };
 
         const message = await new MessageModel(createContext).save();
+
+        const params: Record<string, any> = {};
+        if (data.body.socket_id) params.socket_id = data.body.socket_id;
+
+        await trigger(`presence-inbox-${String(appointment._id)}`, "new-message", message, params);
 
         return message;
     }
