@@ -6,6 +6,7 @@ import authRoutes from "@/routes/auth.route";
 import userRoutes from "@/routes/user.route";
 import doctorRoutes from "@/routes/doctor.route";
 import patientRoutes from "@/routes/patient.route";
+import messageRoutes from "@/routes/message.route";
 import appointmentRoutes from "@/routes/appointment.route";
 import prescriptionRoutes from "@/routes/prescription.route";
 
@@ -20,6 +21,8 @@ router.use("/users", userRoutes);
 router.use("/doctors", doctorRoutes);
 
 router.use("/patients", patientRoutes);
+
+router.use("/messages", messageRoutes);
 
 router.use("/appointments", appointmentRoutes);
 
