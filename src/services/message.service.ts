@@ -1,8 +1,10 @@
 import Joi from "joi";
 import { Request } from "express";
 
+import UserModel from "@/models/user.model";
 import MessageModel from "@/models/message.model";
 import CustomError from "@/utilities/custom-error";
+import { authenticateUser } from "@/libraries/pusher";
 import AppointmentModel from "@/models/appointment.model";
 
 class MessageService {
@@ -36,6 +38,32 @@ class MessageService {
         const message = await new MessageModel(createContext).save();
 
         return message;
+    }
+
+    async pusherAuthenticateUser({ body, $currentUser }: Partial<Request>) {
+        const { error, value: data } = Joi.object({
+            body: Joi.object({
+                socket_id: Joi.string().required(),
+            }).required(),
+            $currentUser: Joi.object({
+                _id: Joi.required(),
+            }).required(),
+        })
+            .options({ stripUnknown: true })
+            .validate({ body, $currentUser });
+        if (error) throw new CustomError(error.message, 400);
+
+        const user = await UserModel.findOne({ _id: data.$currentUser._id });
+        if (!user) throw new CustomError("user not found", 404);
+
+        const payload = {
+            id: String(user._id),
+            user_info: { ...user, _id: String(user._id), password: undefined },
+        };
+
+        const userAuthResponse = authenticateUser(data.body.socket_id, payload);
+
+        return userAuthResponse;
     }
 }
 
