@@ -79,7 +79,11 @@ class MessageService {
             page: data.query.page,
             limit: data.query.limit,
             sort: { created_at: -1 },
-            populate: { path: "sender_ref doctor_profile_ref patient_profile_ref" },
+            populate: [
+                { path: "sender_ref", select: "first_name last_name profile_picture" },
+                { path: "doctor_profile_ref", select: "full_name" },
+                { path: "patient_profile_ref", select: "full_name" },
+            ],
             customLabels: {
                 prevPage: "prev_page",
                 nextPage: "next_page",
