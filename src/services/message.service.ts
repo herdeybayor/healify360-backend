@@ -17,6 +17,7 @@ class MessageService {
             }).required(),
             $currentUser: Joi.object({
                 _id: Joi.required(),
+                role: Joi.string().valid("doctor", "patient").required(),
             }).required(),
         })
             .options({ stripUnknown: true })
@@ -32,8 +33,11 @@ class MessageService {
 
         const createContext = {
             message: data.body.message,
+            sent_by: data.$currentUser.role,
             appointment_ref: appointment._id,
             sender_ref: data.$currentUser._id,
+            doctor_profile_ref: appointment.doctor_profile_ref,
+            patient_profile_ref: appointment.patient_profile_ref,
         };
 
         const message = await new MessageModel(createContext).save();
