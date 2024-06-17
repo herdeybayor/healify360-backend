@@ -7,4 +7,6 @@ const router: Router = Router();
 
 router.post("/send", auth(CONFIGS.APP_ROLES.USER), MessageCtrl.create);
 
+router.post("/pusher/authenticate/user", auth(CONFIGS.APP_ROLES.USER), MessageCtrl.pusherAuthenticateUser);
+
 export default router;
