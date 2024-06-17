@@ -6,7 +6,7 @@ import CustomError from "@/utilities/custom-error";
 import AppointmentModel from "@/models/appointment.model";
 
 class MessageService {
-    async createMessage({ body, $currentUser }: Partial<Request>) {
+    async create({ body, $currentUser }: Partial<Request>) {
         const { error, value: data } = Joi.object({
             body: Joi.object({
                 message: Joi.string().required(),
