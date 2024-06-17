@@ -9,6 +9,11 @@ class MessageController {
         res.status(201).send(response("message created", result));
     }
 
+    async getAllByAppointmentId(req: Request, res: Response) {
+        const result = await MessageService.getAllByAppointmentId(req);
+        res.status(200).send(response("messages retrieved", result));
+    }
+
     async pusherAuthenticateUser(req: Request, res: Response) {
         const result = await MessageService.pusherAuthenticateUser(req);
         res.status(200).json(result);
