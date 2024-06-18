@@ -33,6 +33,7 @@ const userSchema = new mongoose.Schema<IUser>(
         },
         is_onboarding_complete: {
             type: Boolean,
+            required: true,
             default: false,
         },
         role: {
