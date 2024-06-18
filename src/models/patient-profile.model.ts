@@ -76,7 +76,10 @@ export interface IPatientProfile extends mongoose.Document {
     emergency_contact: {
         name: string;
         email: string;
-        phone: string;
+        phone: {
+            code: string;
+            number: string;
+        };
         relationship: string;
     };
     preferences: {
@@ -268,7 +271,16 @@ const patientProfileSchema = new mongoose.Schema<IPatientProfile>(
                     required: true,
                 },
                 phone: {
-                    type: String,
+                    type: {
+                        code: {
+                            type: String,
+                            required: true,
+                        },
+                        number: {
+                            type: String,
+                            required: true,
+                        },
+                    },
                     required: true,
                 },
                 relationship: {

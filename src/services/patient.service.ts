@@ -62,7 +62,10 @@ class PatientService {
                 emergency_contact: Joi.object({
                     name: Joi.string().required(),
                     email: Joi.string().email().required(),
-                    phone: Joi.string().required(),
+                    phone: Joi.object({
+                        code: Joi.string().required(),
+                        number: Joi.string().required(),
+                    }).required(),
                     relationship: Joi.string().required(),
                 }),
                 preferences: Joi.object({
