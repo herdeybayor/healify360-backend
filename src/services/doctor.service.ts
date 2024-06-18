@@ -166,7 +166,7 @@ class DoctorService {
         const options = {
             page: data.query.page,
             limit: data.query.limit,
-            sort: { log_timestamp: -1 },
+            sort: { created_at: -1 },
             populate: { path: "user_ref", select: { _id: 1, email: 1 } },
             customLabels: {
                 prevPage: "prev_page",
