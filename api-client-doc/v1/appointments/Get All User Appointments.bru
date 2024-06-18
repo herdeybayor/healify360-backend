@@ -1,0 +1,15 @@
+meta {
+  name: Get All User Appointments
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{API_BASE_URL}}/appointments/all
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{ACCESS_TOKEN}}
+}
