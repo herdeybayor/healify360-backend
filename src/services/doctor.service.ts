@@ -1,6 +1,7 @@
 import Joi from "joi";
 import { Request } from "express";
 
+import UserModel from "@/models/user.model";
 import CustomError from "@/utilities/custom-error";
 import PrescriptionModel from "@/models/prescription.model";
 import AppointmentModel, { APPOINTMENT_STATUS } from "@/models/appointment.model";
@@ -90,6 +91,8 @@ class DoctorService {
         };
 
         const profile = await new DoctorProfileModel(createContext).save();
+
+        await UserModel.updateOne({ _id: data.$currentUser._id }, { is_onboarding_complete: true });
 
         return profile;
     }

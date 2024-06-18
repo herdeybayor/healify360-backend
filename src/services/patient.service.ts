@@ -1,6 +1,7 @@
 import Joi from "joi";
 import { Request } from "express";
 
+import UserModel from "@/models/user.model";
 import CustomError from "@/utilities/custom-error";
 import PatientProfileModel, { ETHNICITY } from "@/models/patient-profile.model";
 
@@ -75,6 +76,8 @@ class PatientService {
         };
 
         const profile = await new PatientProfileModel(createContext).save();
+
+        await UserModel.updateOne({ _id: data.$currentUser._id }, { is_onboarding_complete: true });
 
         return profile;
     }

@@ -2,9 +2,10 @@ import mongoose from "mongoose";
 
 export interface IUser extends mongoose.Document {
     email: string;
-    first_name: string;
     last_name: string;
     password?: string;
+    first_name: string;
+    is_onboarding_complete: boolean;
     role: "patient" | "doctor" | "admin";
     created_at: Date;
     updated_at: Date;
@@ -29,6 +30,10 @@ const userSchema = new mongoose.Schema<IUser>(
             type: String,
             required: true,
             select: false,
+        },
+        is_onboarding_complete: {
+            type: Boolean,
+            default: false,
         },
         role: {
             type: String,
