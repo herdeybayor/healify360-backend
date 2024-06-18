@@ -107,6 +107,7 @@ class AppointmentService {
             query: Joi.object({
                 page: Joi.number().default(1),
                 limit: Joi.number().default(10),
+                status: Joi.string().valid(...Object.values(APPOINTMENT_STATUS).map((status) => status.enumValue)),
             }),
             $currentUser: Joi.object({
                 _id: Joi.required(),
@@ -134,6 +135,7 @@ class AppointmentService {
         const filter: Record<string, any> = {
             $or: [{ doctor_ref: data.$currentUser._id }, { patient_ref: data.$currentUser._id }],
         };
+        if (data.query.status) filter.status = data.query.status;
 
         const appointments = await AppointmentModel.paginate(filter, options);
 
