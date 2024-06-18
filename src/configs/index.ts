@@ -65,7 +65,7 @@ const CONFIG_BUILDER = {
 
         MONGODB_URI: "mongodb+srv://toluolatubosun:PycclWtgYu5LOBFc@cluster0.o2qgaov.mongodb.net/healify360?retryWrites=true&w=majority",
 
-        CORS_ALLOWED_ORIGINS: ["http://localhost:3000", "https://example.com"],
+        CORS_ALLOWED_ORIGINS: ["http://localhost:3000", "https://example.com", "https://cared-chickens-lousy-ocean-production.pipeops.app"],
     },
 
     production: {
