@@ -81,7 +81,7 @@ const CONFIG_BUILDER = {
 
         MONGODB_URI: process.env.MONGO_ATLAS_URI!,
 
-        CORS_ALLOWED_ORIGINS: ["https://example.com", "https://www.example.com"],
+        CORS_ALLOWED_ORIGINS: ["https://example.com", "https://www.example.com", "https://cared-chickens-lousy-ocean-production.pipeops.app"],
     },
 } as const;
 
