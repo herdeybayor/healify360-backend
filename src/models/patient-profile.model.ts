@@ -48,9 +48,20 @@ export interface IPatientProfile extends mongoose.Document {
         name: string;
         period: Date;
     }[];
-    allergies: string[];
-    family_medical_history: string[];
-    current_medications: string[];
+    allergies: {
+        name: string;
+        reaction: string;
+    }[];
+    family_medical_history: {
+        name: string;
+        illness: string;
+        relationship: string;
+    }[];
+    current_medications: {
+        name: string;
+        dosage: string;
+        frequency: string;
+    }[];
     home_address: {
         city: string;
         state: string;
@@ -69,9 +80,16 @@ export interface IPatientProfile extends mongoose.Document {
         relationship: string;
     };
     preferences: {
-        languages: string[];
-        accessibility_needs: string[];
-        communication_preferences: string[];
+        languages: {
+            language: string;
+            proficiency: string;
+        }[];
+        accessibility_needs: {
+            need: string;
+        }[];
+        communication_preferences: {
+            preference: string;
+        }[];
     };
     occupation: string | null;
     ethnicity: (typeof ETHNICITY)[keyof typeof ETHNICITY]["enumValue"] | null;
@@ -144,17 +162,58 @@ const patientProfileSchema = new mongoose.Schema<IPatientProfile>(
             _id: false,
         },
         allergies: {
-            type: [String],
+            type: [
+                {
+                    name: {
+                        type: String,
+                        required: true,
+                    },
+                    reaction: {
+                        type: String,
+                        required: true,
+                    },
+                },
+            ],
             default: [],
             required: true,
         },
         family_medical_history: {
-            type: [String],
+            type: [
+                {
+                    name: {
+                        type: String,
+                        required: true,
+                    },
+                    illness: {
+                        type: String,
+                        required: true,
+                    },
+                    relationship: {
+                        type: String,
+                        required: true,
+                    },
+                },
+            ],
             default: [],
             required: true,
         },
         current_medications: {
-            type: [String],
+            type: [
+                {
+                    name: {
+                        type: String,
+                        required: true,
+                    },
+                    dosage: {
+                        type: String,
+                        required: true,
+                    },
+                    frequency: {
+                        type: String,
+                        required: true,
+                    },
+                },
+            ],
             default: [],
             required: true,
         },
@@ -223,17 +282,42 @@ const patientProfileSchema = new mongoose.Schema<IPatientProfile>(
         preferences: {
             type: {
                 languages: {
-                    type: [String],
+                    type: [
+                        {
+                            language: {
+                                type: String,
+                                required: true,
+                            },
+                            proficiency: {
+                                type: String,
+                                required: true,
+                            },
+                        },
+                    ],
                     default: [],
                     required: true,
                 },
                 communication_preferences: {
-                    type: [String],
+                    type: [
+                        {
+                            preference: {
+                                type: String,
+                                required: true,
+                            },
+                        },
+                    ],
                     default: [],
                     required: true,
                 },
                 accessibility_needs: {
-                    type: [String],
+                    type: [
+                        {
+                            need: {
+                                type: String,
+                                required: true,
+                            },
+                        },
+                    ],
                     default: [],
                     required: true,
                 },
