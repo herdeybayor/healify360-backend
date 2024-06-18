@@ -28,9 +28,26 @@ class PatientService {
                         period: Joi.date().required(),
                     })
                 ),
-                allergies: Joi.array().items(Joi.string()),
-                family_medical_history: Joi.array().items(Joi.string()),
-                current_medications: Joi.array().items(Joi.string()),
+                allergies: Joi.array().items(
+                    Joi.object({
+                        name: Joi.string().required(),
+                        reaction: Joi.string().required(),
+                    })
+                ),
+                family_medical_history: Joi.array().items(
+                    Joi.object({
+                        name: Joi.string().required(),
+                        illness: Joi.string().required(),
+                        relationship: Joi.string().required(),
+                    })
+                ),
+                current_medications: Joi.array().items(
+                    Joi.object({
+                        name: Joi.string().required(),
+                        dosage: Joi.string().required(),
+                        frequency: Joi.string().required(),
+                    })
+                ),
                 home_address: Joi.object({
                     city: Joi.string().required(),
                     state: Joi.string().required(),
@@ -49,9 +66,28 @@ class PatientService {
                     relationship: Joi.string().required(),
                 }),
                 preferences: Joi.object({
-                    languages: Joi.array().items(Joi.string()).required(),
-                    communication_preferences: Joi.array().items(Joi.string()).required(),
-                    accessibility_needs: Joi.array().items(Joi.string()).required(),
+                    languages: Joi.array()
+                        .items(
+                            Joi.object({
+                                language: Joi.string().required(),
+                                proficiency: Joi.string().required(),
+                            })
+                        )
+                        .required(),
+                    communication_preferences: Joi.array()
+                        .items(
+                            Joi.object({
+                                preference: Joi.string().required(),
+                            })
+                        )
+                        .required(),
+                    accessibility_needs: Joi.array()
+                        .items(
+                            Joi.object({
+                                need: Joi.string().required(),
+                            })
+                        )
+                        .required(),
                 }),
                 occupation: Joi.string().allow(null),
                 ethnicity: Joi.string().valid(...Object.values(ETHNICITY).map((v) => v.enumValue)),
