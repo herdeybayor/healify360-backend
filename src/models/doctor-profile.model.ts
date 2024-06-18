@@ -103,8 +103,8 @@ export interface IDoctorProfile extends mongoose.Document {
         code: string;
         number: string;
     };
+    sub_specialization: string;
     specialization: keyof typeof SPECIALIZATION;
-    sub_specialization: (typeof SPECIALIZATION)[keyof typeof SPECIALIZATION][number];
     education: {
         year: number;
         institution: string;
@@ -122,8 +122,14 @@ export interface IDoctorProfile extends mongoose.Document {
         coverage_amount_in_dollars: number;
     };
     services_provided: {
-        procedures: string[];
-        conditions_treated: string[];
+        procedures: {
+            title: string;
+            description: string;
+        }[];
+        conditions_treated: {
+            title: string;
+            description: string;
+        }[];
     };
     awards: {
         title: string;
@@ -205,7 +211,6 @@ const doctorProfileSchema = new mongoose.Schema<IDoctorProfile>(
         sub_specialization: {
             type: String,
             required: true,
-            enum: Object.values(SPECIALIZATION).flat(),
         },
         education: {
             type: [
@@ -275,12 +280,34 @@ const doctorProfileSchema = new mongoose.Schema<IDoctorProfile>(
         services_provided: {
             type: {
                 procedures: {
-                    type: [String],
+                    type: [
+                        {
+                            title: {
+                                type: String,
+                                required: true,
+                            },
+                            description: {
+                                type: String,
+                                required: true,
+                            },
+                        },
+                    ],
                     required: true,
                     default: [],
                 },
                 conditions_treated: {
-                    type: [String],
+                    type: [
+                        {
+                            title: {
+                                type: String,
+                                required: true,
+                            },
+                            description: {
+                                type: String,
+                                required: true,
+                            },
+                        },
+                    ],
                     required: true,
                     default: [],
                 },

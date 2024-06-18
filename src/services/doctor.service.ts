@@ -29,9 +29,7 @@ class DoctorService {
                 specialization: Joi.string()
                     .valid(...Object.keys(SPECIALIZATION))
                     .required(),
-                sub_specialization: Joi.string()
-                    .valid(...Object.values(SPECIALIZATION).flat())
-                    .required(),
+                sub_specialization: Joi.string().required(),
                 education: Joi.array().items(
                     Joi.object({
                         year: Joi.number().required(),
@@ -55,8 +53,22 @@ class DoctorService {
                     coverage_amount_in_dollars: Joi.number().required(),
                 }),
                 services_provided: Joi.object({
-                    procedures: Joi.array().items(Joi.string()).required(),
-                    conditions_treated: Joi.array().items(Joi.string()).required(),
+                    procedures: Joi.array()
+                        .items(
+                            Joi.object({
+                                title: Joi.string().required(),
+                                description: Joi.string().required(),
+                            })
+                        )
+                        .required(),
+                    conditions_treated: Joi.array()
+                        .items(
+                            Joi.object({
+                                title: Joi.string().required(),
+                                description: Joi.string().required(),
+                            })
+                        )
+                        .required(),
                 }),
                 awards: Joi.array().items(
                     Joi.object({
