@@ -61,7 +61,7 @@ class AppointmentService {
             .validate({ params, $currentUser });
         if (error) throw new CustomError(error.message, 400);
 
-        const appointment = await AppointmentModel.findOne({ _id: data.params.appointmentId });
+        const appointment = await AppointmentModel.findOne({ _id: data.params.appointmentId }).populate("doctor_profile_ref").populate("patient_profile_ref");
         if (!appointment) throw new CustomError("appointment not found", 404);
 
         // current user must be the patient who booked the appointment or the doctor who is to attend to the patient
