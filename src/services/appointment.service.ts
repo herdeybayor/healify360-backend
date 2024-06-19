@@ -1,10 +1,10 @@
-import Joi from "joi";
 import { Request } from "express";
+import Joi from "joi";
 
+import AppointmentModel, { APPOINTMENT_STATUS } from "@/models/appointment.model";
+import DoctorProfileModel from "@/models/doctor-profile.model";
 import CustomError from "@/utilities/custom-error";
 import { parseDate } from "@/utilities/helpful-methods";
-import DoctorProfileModel from "@/models/doctor-profile.model";
-import AppointmentModel, { APPOINTMENT_STATUS } from "@/models/appointment.model";
 
 class AppointmentService {
     async bookAppointment({ body, $currentUser, $currentPatientProfile }: Request) {
@@ -130,6 +130,7 @@ class AppointmentService {
                 hasNextPage: "has_next_page",
                 pagingCounter: "paging_counter",
             },
+            populate: ["doctor_profile_ref", "patient_profile_ref"],
         };
 
         const filter: Record<string, any> = {
