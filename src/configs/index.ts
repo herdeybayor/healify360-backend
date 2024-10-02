@@ -56,9 +56,9 @@ const CONFIG_BUILDER = {
         ...GLOBAL_CONSTANTS,
 
         URL: {
-            AUTH_BASE_URL: "https://example.com",
-            API_BASE_URL: "https://api.example.com",
-            LANDING_BASE_URL: "https://example.com",
+            AUTH_BASE_URL: "https://healify360.vercel.app",
+            API_BASE_URL: "https://healify360-backend.cp.keenzchillz.properties",
+            LANDING_BASE_URL: "https://healify360.vercel.app",
         },
 
         JWT_SECRET: "T4u2Rcnne09F.FBr11f0VvERyUiq",
@@ -72,9 +72,9 @@ const CONFIG_BUILDER = {
         ...GLOBAL_CONSTANTS,
 
         URL: {
-            AUTH_BASE_URL: "https://example.com",
-            API_BASE_URL: "https://api.example.com",
-            LANDING_BASE_URL: "https://example.com",
+            AUTH_BASE_URL: "https://healify360.vercel.app",
+            API_BASE_URL: "https://healify360-backend.cp.keenzchillz.properties",
+            LANDING_BASE_URL: "https://healify360.vercel.app",
         },
 
         JWT_SECRET: process.env.JWT_SECRET!,
