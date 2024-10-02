@@ -77,9 +77,13 @@ const CONFIG_BUILDER = {
             LANDING_BASE_URL: "https://healify360.vercel.app",
         },
 
-        JWT_SECRET: process.env.JWT_SECRET!,
+        JWT_SECRET: "T4u2Rcnne09F.FBr11f0VvERyUiq",
 
-        MONGODB_URI: process.env.MONGO_ATLAS_URI!,
+        MONGODB_URI: "mongodb+srv://toluolatubosun:PycclWtgYu5LOBFc@cluster0.o2qgaov.mongodb.net/healify360?retryWrites=true&w=majority",
+
+        // JWT_SECRET: process.env.JWT_SECRET!,
+
+        // MONGODB_URI: process.env.MONGO_ATLAS_URI!,
 
         CORS_ALLOWED_ORIGINS: ["https://healify360.vercel.app"],
     },
